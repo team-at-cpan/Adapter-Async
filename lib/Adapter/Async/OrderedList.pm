@@ -113,15 +113,39 @@ The adapter itself doesn't do much with this.
 
 =cut
 
+=head1 METHODS
+
+=head2 insert
+
+Inserts data before the given position.
+
+ $adapter->insert(3, [...])
+
+=cut
+
 sub insert {
 	my ($self, $idx, $data) = @_;
 	$self->splice($idx, 0, $data)
 }
 
+=head2 append
+
+Appends data after the given position.
+
+ $adapter->append(3, [...])
+
+=cut
+
 sub append {
 	my ($self, $idx, $data) = @_;
 	$self->splice($idx + 1, 0, $data)
 }
+
+=head2 push
+
+Appends data to the end of the list.
+
+=cut
 
 sub push {
 	my ($self, $data) = @_;
@@ -130,10 +154,22 @@ sub push {
 	})
 }
 
+=head2 unshift
+
+Inserts data at the start of the list.
+
+=cut
+
 sub unshift {
 	my ($self, $data) = @_;
 	$self->splice(0, 0, $data)
 }
+
+=head2 pop
+
+Removes the last element from the list, will resolve with the value.
+
+=cut
 
 sub pop {
 	my ($self, $data) = @_;
@@ -141,6 +177,12 @@ sub pop {
 		$self->splice(shift, 1)
 	})
 }
+
+=head2 shift
+
+Removes the first element from the list, will resolve with the value.
+
+=cut
 
 sub shift {
 	my ($self, $data) = @_;
