@@ -142,7 +142,7 @@ sub pop {
 	})
 }
 
-sub unshift {
+sub shift {
 	my ($self, $data) = @_;
 	$self->splice(0, 1)
 }
