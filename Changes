@@ -1,6 +1,11 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	Features:
+	* Helper methods for ->push, ->shift, ->unshift, ->pop
+	* Moved ->insert, ->append to ::OrderedList, since
+	the wrappers are likely to be appropriate for other
+	implementations as well
 
 0.003     2014-08-12 18:39:22+01:00 Europe/London
 	No new features
