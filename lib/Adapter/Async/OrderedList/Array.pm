@@ -59,6 +59,28 @@ sub delete {
 	$self->splice($idx, 1, [])
 }
 
+sub find_from {
+	my ($self, $idx, $data) = @_;
+	my $delta = 0;
+	my $end = $#{$self->{data}};
+	ITEM:
+	while(1) {
+		if($idx + $delta <= $end) {
+			return Future->wrap(
+				$idx + $delta
+			) if $self->{data}[$idx + $delta] eq $data;
+		}
+		if($idx - $delta >= 0) {
+			return Future->wrap(
+				$idx - $delta
+			) if $self->{data}[$idx - $delta] eq $data;
+		}
+		last ITEM if $idx + $delta > $end && $idx - $delta < 0;
+		++$delta;
+	}
+	Future->fail('not found');
+}
+
 =head1 count
 
 =cut
