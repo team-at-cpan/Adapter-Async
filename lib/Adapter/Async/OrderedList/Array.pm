@@ -73,6 +73,7 @@ sub count {
 
 sub get {
 	my ($self, %args) = @_;
+	return Future->fail('unknown item') if grep $_ > @{$self->{data}}, @{$args{items}};
 	my @items = @{$self->{data}}[@{$args{items}}];
 	if(my $code = $args{on_item}) {
 		my @idx = @{$args{items}};
