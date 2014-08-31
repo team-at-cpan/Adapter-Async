@@ -30,9 +30,10 @@ sub clear {
 
 sub splice:method {
 	my ($self, $idx, $len, $data) = @_;
-	splice @{$self->{data}}, $idx, $len, @$data;
-	$self->bus->invoke_event(splice => $idx, $len, $data);
-	Future->wrap($idx, $len, $data);
+	$data ||= [];
+	my @rslt = splice @{$self->{data}}, $idx, $len, @$data;
+	$self->bus->invoke_event(splice => $idx, $len, $data => \@rslt);
+	Future->wrap($idx, $len, $data, \@rslt);
 }
 
 # XXX weakrefs
