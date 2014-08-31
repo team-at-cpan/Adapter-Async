@@ -1,6 +1,13 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	Features:
+	* Helper methods for ->all
+
+	Bug fixes:
+	* Off-by-one on ->pop
+	* Better splice handling - now also returns the elements found,
+	might need to make this optional so it's undocumented for now.
 
 0.006     2014-08-16 09:42:43+01:00 Europe/London
 	No new features.
