@@ -123,6 +123,30 @@ sub append {
 	$self->splice($idx + 1, 0, $data)
 }
 
+sub push {
+	my ($self, $data) = @_;
+	$self->count->then(sub {
+		$self->splice(shift, 0, $data)
+	})
+}
+
+sub unshift {
+	my ($self, $data) = @_;
+	$self->splice(0, 0, $data)
+}
+
+sub pop {
+	my ($self, $data) = @_;
+	$self->count->then(sub {
+		$self->splice(shift, 1)
+	})
+}
+
+sub unshift {
+	my ($self, $data) = @_;
+	$self->splice(0, 1)
+}
+
 1;
 
 __END__
