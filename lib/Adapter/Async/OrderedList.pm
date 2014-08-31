@@ -113,6 +113,16 @@ The adapter itself doesn't do much with this.
 
 =cut
 
+sub insert {
+	my ($self, $idx, $data) = @_;
+	$self->splice($idx, 0, $data)
+}
+
+sub append {
+	my ($self, $idx, $data) = @_;
+	$self->splice($idx + 1, 0, $data)
+}
+
 1;
 
 __END__

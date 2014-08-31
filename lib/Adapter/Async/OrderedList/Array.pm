@@ -52,16 +52,6 @@ sub modify {
 	Future->wrap
 }
 
-sub insert {
-	my ($self, $idx, $data) = @_;
-	$self->splice($idx, 0, $data)
-}
-
-sub append {
-	my ($self, $idx, $data) = @_;
-	$self->splice($idx + 1, 0, $data)
-}
-
 sub delete {
 	my ($self, $idx) = @_;
 	$self->splice($idx, 1, [])
