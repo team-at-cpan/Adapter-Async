@@ -193,6 +193,27 @@ sub shift {
 	$self->splice(0, 1)
 }
 
+=head2 all
+
+Returns all the items. Shortcut for calling
+L</count> then L</get>.
+
+=cut
+
+sub all {
+	my ($self, %args) = @_;
+	my $f;
+	$f = $self->count->then(sub {
+		my ($count) = @_;
+		return Future->wrap([]) unless $count;
+		$self->get(
+			%args,
+			items => [0..$count-1],
+		)
+	})->on_ready(sub { undef $f });
+	$f
+}
+
 1;
 
 __END__
