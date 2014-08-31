@@ -22,8 +22,6 @@ sub new { my $class = shift; bless { @_ }, $class }
 
 =head1 EVENTS
 
-=head2
-
 =cut
 
 1;

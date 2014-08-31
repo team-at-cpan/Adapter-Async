@@ -7,11 +7,14 @@ our $VERSION = '0.001';
 
 =head1 NAME
 
-Adapter::Async -
-
-=head1 SYNOPSIS
+Adapter::Async - provides a way to link a data source with a view
 
 =head1 DESCRIPTION
+
+C<WARNING> - this is extremely experimental and utterly unoptimised.
+Expect the API to change between versions until this reaches 1.0+.
+Primarily being released to allow work to continue on various L<Tickit>
+widgets and web framework components.
 
 =cut
 
@@ -24,10 +27,23 @@ use Adapter::Async::Bus;
 
 =cut
 
+=head2 new
+
+Instantiate, applying any parameters directly to the instance hashref.
+
+=cut
+
 sub new {
 	my $class = shift;
 	bless { @_ }, $class
 }
+
+=head2 bus
+
+Accessor for the L<Adapter::Async::Bus> instance, will create one as
+required.
+
+=cut
 
 sub bus { shift->{bus} ||= Adapter::Async::Bus->new }
 
@@ -35,13 +51,11 @@ sub bus { shift->{bus} ||= Adapter::Async::Bus->new }
 
 __END__
 
-=head1 SEE ALSO
-
 =head1 AUTHOR
 
 Tom Molesworth <cpan@perlsite.co.uk>
 
 =head1 LICENSE
 
-Copyright Tom Molesworth 2011. Licensed under the same terms as Perl itself.
+Copyright Tom Molesworth 2013-2014. Licensed under the same terms as Perl itself.
 

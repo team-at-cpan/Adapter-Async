@@ -7,11 +7,11 @@ use parent qw(Adapter::Async::OrderedList);
 
 =head1 NAME
 
-Adapter::Async::OrderedList::Array - arrayref adapter for L<Tickit::Widget::Table>
-
-=head1 SYNOPSIS
+Adapter::Async::OrderedList::Array - arrayref adapter
 
 =head1 DESCRIPTION
+
+See L<Adapter::Async::OrderedList> for the API.
 
 =cut
 
@@ -84,7 +84,8 @@ sub get {
 	my ($self, %args) = @_;
 	my @items = @{$self->{data}}[@{$args{items}}];
 	if(my $code = $args{on_item}) {
-		$code->($_) for @items;
+		my @idx = @{$args{items}};
+		$code->(shift(@idx), $_) for @items;
 	}
 	Future->wrap(\@items)
 }
@@ -95,7 +96,7 @@ __END__
 
 =head1 AUTHOR
 
-Tom Molesworth <cpan@entitymodel.com>
+Tom Molesworth <cpan@perlsite.co.uk>
 
 =head1 LICENSE
 
