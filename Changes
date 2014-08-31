@@ -1,6 +1,10 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	No new features.
+
+	Test fixes:
+	* Missing tests from previous release added
 
 0.008     2014-08-30 00:38:42+01:00 Europe/London
 	Features:
