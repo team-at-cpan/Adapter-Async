@@ -177,7 +177,7 @@ sub pop {
 	my ($self, $data) = @_;
 	my $f;
 	$f = $self->count->then(sub {
-		$self->splice(shift, 0, 1)
+		$self->splice(shift() - 1, 1)
 	})->on_ready(sub { undef $f });
 	$f
 }
