@@ -40,6 +40,8 @@ This means we have double-notify on get: a request for (1,2,3,4) needs to fire e
 
 =item * splice - modify by adding/removing items at a given point
 
+=item * modify - changes a single entry
+
 =back
 
 Helper methods provide the following:

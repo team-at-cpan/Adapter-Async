@@ -47,9 +47,10 @@ sub move {
 
 # XXX needs updating
 sub modify {
-	my ($self, $idx, @cols) = @_;
+	my ($self, $idx, $data) = @_;
 	die "row out of bounds" unless @{$self->{data}} >= $idx;
-	$self->{data}[$idx][$_] = $cols[$_] for 0..$#cols;
+	$self->{data}[$idx] = $data;
+	$self->bus->invoke_event(modify => $idx, $data);
 	Future->wrap
 }
 
