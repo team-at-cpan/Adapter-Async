@@ -7,7 +7,7 @@ use parent qw(Adapter::Async);
 
 =head1 NAME
 
-Adapter::Async - provides a way to link a data source with a view
+Adapter::Async::OrderedList - API for dealing with ordered lists
 
 =head1 DESCRIPTION
 
