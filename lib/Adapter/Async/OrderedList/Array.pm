@@ -67,6 +67,8 @@ sub find_from {
 	my ($self, $idx, $data) = @_;
 	my $delta = 0;
 	my $end = $#{$self->{data}};
+	$idx = $end if $idx > $end;
+	$idx = 0 if $idx < 0;
 	ITEM:
 	while(1) {
 		if($idx + $delta <= $end) {
