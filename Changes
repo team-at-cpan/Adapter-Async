@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.007     2014-08-21 17:20:12+01:00 Europe/London
 	Features:
 	* Helper methods for ->all
 
