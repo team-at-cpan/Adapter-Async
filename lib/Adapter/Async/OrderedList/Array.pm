@@ -59,6 +59,10 @@ sub delete {
 	$self->splice($idx, 1, [])
 }
 
+# Locate matching element (via eq), starting at the given index
+# and iterating either side until we hit it. For cases where splice
+# activity may have moved the element but we're not expecting it to
+# have gone far.
 sub find_from {
 	my ($self, $idx, $data) = @_;
 	my $delta = 0;
