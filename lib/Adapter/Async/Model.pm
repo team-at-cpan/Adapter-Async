@@ -103,7 +103,7 @@ sub import {
 				return $self->$type->get_key($v) if shift;
 
 				my $item = $create->($v);
-				warn "set $v on $type for $self to $item via " . $self->$type;
+				$log->tracef("Set %s on %s for %s to %s via %s", $v, $type, "$self", $item,$self->$type);
 				$self->$type->set_key(
 					$v => $item
 				)->transform(
