@@ -1,8 +1,9 @@
 requires 'parent', 0;
 requires 'curry', 0;
 requires 'Future', '>= 0.30';
-requires 'Mixin::Event::Dispatch', '>= 1.005';
-requires 'Check::UnitCheck', 0;
+requires 'Mixin::Event::Dispatch', '>= 1.006';
+
+recommends 'Check::UnitCheck', '>= 0.13';
 
 on 'test' => sub {
 	requires 'Test::More', '>= 0.98';
