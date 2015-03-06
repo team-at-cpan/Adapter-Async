@@ -1,4 +1,4 @@
-package Adapter::Async::OrderedList::Hash;
+package Adapter::Async::UnorderedMap::Hash;
 
 use strict;
 use warnings;
@@ -50,7 +50,6 @@ sub delete {
 	my ($self, $k) = @_;
 	delete $self->{data}{$k};
 	Future->wrap;
-	$self->splice($idx, 1, [])
 }
 
 =head1 count

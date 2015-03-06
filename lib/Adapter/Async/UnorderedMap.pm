@@ -19,18 +19,21 @@ Adapter::Async::UnorderedMap - API for dealing with key => value maps
 
  say "items: " . $adapter->count->get
 
-=item * get - accepts a list of indices
+=item * get - accepts a list of keys
 
  $adapter->get(
   items   => [1,2,3],
   on_item => sub { ... }
- )->on_done(sub { warn "all done, full list of items: @{$_[0]}" })
+ )->on_done(sub { warn "all done, full list of items: %{$_[0]}" })
 
-The returned list of items are guaranteed not to be modified further, if you want to store the arrayref directly.
+Unlike the L<Adapter::Async::OrderedList/get> method, this resolves to a hashref.
+
+The top-level of the hashref returned is guaranteed not to be modified further, if you want to store it
+directly. No such guarantee applies to the values themselves - it is only a shallow clone.
 
 =back
 
-This means we have double-notify on get: a request for (1,2,3,4) needs to fire events for each of 1,2,3,4, and also return the list of all of them on completion (by resolving a Future).
+This means we have double-notify on get: a request for (a,b, 34, q) needs to fire events for each of a,b,34,q, and also return the hashref containing those keys on completion (by resolving a L<Future>).
 
 =head2 Modification
 
@@ -38,19 +41,11 @@ This means we have double-notify on get: a request for (1,2,3,4) needs to fire e
 
 =item * clear - remove all data
 
-=item * splice - modify by adding/removing items at a given point
-
 =item * modify - changes a single entry
 
-=back
+=item * set - adds a new key
 
-Helper methods provide the following:
-
-=over 4
-
-=item * insert - splice $idx, @data, 0
-
-=item * append - splice $idx + 1, @data, 0
+=item * delete - removes an existing key
 
 =back
 
@@ -66,9 +61,7 @@ The adapter raises these:
 
 =item * splice - changes to the array which remove or add elements
 
-=item * move - an existing element moves to a new position (some adapters may not be able to differentiate between this and splice: if in doubt, use splice instead, don't report as a move unless it's guaranteed to be existing items)
-
- index, length, offset (+/-)
+=item * move - an existing element moves to a new key (some adapters may not be able to differentiate between this and splice: if in doubt, use splice instead, don't report as a move unless it's guaranteed to be existing items)
 
 =back
 
@@ -117,83 +110,15 @@ The adapter itself doesn't do much with this.
 
 =head1 METHODS
 
-=head2 insert
+=head2 set
 
-Inserts data before the given position.
+Sets the value of a key.
 
- $adapter->insert(3, [...])
-
-=cut
-
-sub insert {
-	my ($self, $idx, $data) = @_;
-	$self->splice($idx, 0, $data)
-}
-
-=head2 append
-
-Appends data after the given position.
-
- $adapter->append(3, [...])
+ $adapter->set(xyz => 'abc')
 
 =cut
 
-sub append {
-	my ($self, $idx, $data) = @_;
-	$self->splice($idx + 1, 0, $data)
-}
-
-=head2 push
-
-Appends data to the end of the list.
-
-=cut
-
-sub push {
-	my ($self, $data) = @_;
-	my $f;
-	$f = $self->count->then(sub {
-		$self->splice(shift, 0, $data)
-	})->on_ready(sub { undef $f });
-	$f
-}
-
-=head2 unshift
-
-Inserts data at the start of the list.
-
-=cut
-
-sub unshift {
-	my ($self, $data) = @_;
-	$self->splice(0, 0, $data)
-}
-
-=head2 pop
-
-Removes the last element from the list, will resolve with the value.
-
-=cut
-
-sub pop {
-	my ($self, $data) = @_;
-	my $f;
-	$f = $self->count->then(sub {
-		$self->splice(shift() - 1, 1)
-	})->on_ready(sub { undef $f });
-	$f
-}
-
-=head2 shift
-
-Removes the first element from the list, will resolve with the value.
-
-=cut
-
-sub shift {
-	my ($self, $data) = @_;
-	$self->splice(0, 1)
-}
+sub set { ... }
 
 =head2 all
 
