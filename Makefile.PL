@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use 5.010001;
+use 5.012000;
 
 use ExtUtils::MakeMaker 6.48;
 
@@ -18,7 +18,7 @@ my %WriteMakefileArgs = (
   "DISTNAME" => "Adapter-Async",
   "EXE_FILES" => [],
   "LICENSE" => "perl",
-  "MIN_PERL_VERSION" => "5.010001",
+  "MIN_PERL_VERSION" => "5.012000",
   "NAME" => "Adapter::Async",
   "PREREQ_PM" => {
     "Future" => "0.29",
@@ -34,7 +34,7 @@ my %WriteMakefileArgs = (
     "Test::Fatal" => "0.010",
     "Test::More" => "0.98"
   },
-  "VERSION" => "0.012",
+  "VERSION" => "0.013",
   "test" => {
     "TESTS" => "t/*.t"
   }

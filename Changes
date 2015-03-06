@@ -2,6 +2,14 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+0.013     2015-02-11 22:10:56+00:00 Europe/London
+	Features:
+	* ->range for retrieving available results from an OrderedList when actual size is not
+	yet known.
+
+	Dependencies:
+	* perl 5.012, for ... construct
+
 0.012     2015-02-03 22:37:49+00:00 Europe/London
 	Features:
 	* UnorderedMap and hashref implementation. API might take a few versions
