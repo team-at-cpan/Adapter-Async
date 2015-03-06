@@ -111,6 +111,39 @@ sub get {
 	Future->wrap(\@items)
 }
 
+=head2 range
+
+Retrieves all items in a range.
+
+=over 4
+
+=item * start
+
+=item * end
+
+=item * count
+
+=item * on_item
+
+=back
+
+=cut
+
+sub range {
+	my ($self, %args) = @_;
+	my $idx = delete $args{start} || 0;
+	my $code = delete $args{on_item};
+	my $max = $#{$self->{data}};
+	$args{end} //= $idx + $args{count} if exists $args{count};
+	$args{end} //= $max;
+	while($idx < $args{end}) {
+		last if $idx > $max;
+		$code->($idx, $self->{data}[$idx]);
+		++$idx;
+	}
+	Future->done
+}
+
 1;
 
 __END__
