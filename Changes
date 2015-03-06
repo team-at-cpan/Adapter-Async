@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.012     2015-02-03 22:37:49+00:00 Europe/London
 	Features:
 	* UnorderedMap and hashref implementation. API might take a few versions
 	to stabilise.
