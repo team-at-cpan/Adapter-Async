@@ -1,6 +1,11 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	No new features.
+
+	Dependency fixes:
+	* Include Variable::Disposition and only run UNITCHECK tests when Check::UnitCheck is installed
+	(RT102513)
 
 0.014     2015-03-04 17:05:00+00:00 Europe/London
 	Features:

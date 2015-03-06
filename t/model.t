@@ -8,7 +8,7 @@ use Adapter::Async::Model;
 	package Local::Model::Item;
 	use Adapter::Async::Model {
 		id => 'int',
-	};
+	}, defer_methods => 0;
 }
 can_ok('Local::Model::Item', qw(new id));
 my $item = new_ok('Local::Model::Item' => [
@@ -21,8 +21,9 @@ is($item->id, 123, 'ID is correct');
 	use Adapter::Async::Model {
 		id => 'int',
 		name => 'string',
-	};
+	}, defer_methods => 0;
 
+	no warnings 'redefine';
 	sub name {
 		my $self = shift;
 		return '' . reverse $self->{name} unless @_;
@@ -47,7 +48,7 @@ can_ok('Local::Model::CustomMethod', qw(new id name));
 			collection => 'OrderedList',
 			type => '::Item',
 		}
-	};
+	}, defer_methods => 0;
 }
 can_ok('Local::Model::ListCollection', qw(new item));
 my $list = new_ok('Local::Model::ListCollection' => [
