@@ -31,7 +31,7 @@ sub import {
 	return unless $def;
 
 	$args{defer_methods} = 1 unless exists $args{defer_methods};
-	($args{model_base} = $pkg) =~ s/Model::\K.*// unless exists $args{model_base};
+	($args{model_base} = $pkg) =~ s/Model\K.*// unless exists $args{model_base};
 
 	my $type_expand = sub {
 		my ($type) = @_;
