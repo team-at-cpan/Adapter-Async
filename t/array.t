@@ -132,5 +132,17 @@ is($array->count->get, 0, 'count now zero');
 	is($modified, 1, 'was modified');
 }
 
+{ # push
+	$array->clear->get;
+	my $modified = 0;
+	is(exception {
+		$array->push([$_])->get for qw(a b c d);
+	}, undef, 'can push');
+	is($array->count->get, 4, 'count now 4');
+	is_deeply($array->get(
+		items => [0..3],
+	)->get, [qw(a b c d)], 'elements were in the right order');
+}
+
 done_testing;
 

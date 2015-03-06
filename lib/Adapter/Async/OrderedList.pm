@@ -154,7 +154,7 @@ sub push {
 	my $f;
 	$f = $self->count->then(sub {
 		my $count = shift;
-		$self->splice(shift, 0, $data)->transform(
+		$self->splice($count, 0, $data)->transform(
 			done => sub {
 				($count, @_)
 			}
