@@ -28,6 +28,25 @@ sub clear {
 	Future->wrap
 }
 
+sub exists {
+	my ($self, $k) = @_;
+	Future->done(
+		exists($self->{data}{$k}) ? 1 : 0
+	)
+}
+
+sub set_key {
+	my ($self, $k, $v) = @_;
+	$self->{data}{$k} = $v;
+	Future->done($k)
+}
+
+sub get_key {
+	my ($self, $k, $v) = @_;
+	Future->fail('key does not exist') unless exists $self->{data}{$k};
+	Future->done($self->{data}{$k})
+}
+
 # XXX weakrefs
 sub move {
 	my ($self, $idx, $len, $offset) = @_;
@@ -49,7 +68,7 @@ sub modify {
 sub delete {
 	my ($self, $k) = @_;
 	delete $self->{data}{$k};
-	Future->wrap;
+	Future->wrap($k);
 }
 
 =head1 count
