@@ -23,6 +23,8 @@ use Variable::Disposition qw(retain_future);
 
 =cut
 
+my %defined;
+
 sub import {
 	my ($class, $def, %args) = @_;
 	my $pkg = caller;
@@ -30,6 +32,7 @@ sub import {
 	# for us to do here
 	return unless $def;
 
+	$defined{$pkg} = 1;
 	$args{defer_methods} = 1 unless exists $args{defer_methods};
 	($args{model_base} = $pkg) =~ s/Model\K.*// unless exists $args{model_base};
 
@@ -112,7 +115,7 @@ sub import {
 
 	for(sort keys %loader) {
 		$log->tracef("Loading %s for %s", $_, $pkg);
-		Module::Load::load($_) 
+		Module::Load::load($_) unless exists($defined{$_}) || $_->can('new')
 	}
 
 	my $apply_methods = sub {
