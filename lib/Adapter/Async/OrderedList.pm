@@ -153,7 +153,12 @@ sub push {
 	my ($self, $data) = @_;
 	my $f;
 	$f = $self->count->then(sub {
-		$self->splice(shift, 0, $data)
+		my $count = shift;
+		$self->splice(shift, 0, $data)->transform(
+			done => sub {
+				($count, @_)
+			}
+		);
 	})->on_ready(sub { undef $f });
 	$f
 }
