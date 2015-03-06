@@ -6,6 +6,8 @@ Revision history for {{$dist->name}}
 	Test fixes:
 	* Missed a defer_methods override in model.t, was failing without Check::UnitCheck
 
+0.016     2015-03-06 16:15:29+00:00 Europe/London
+
 0.015     2015-03-06 15:11:54+00:00 Europe/London
 	No new features.
 
