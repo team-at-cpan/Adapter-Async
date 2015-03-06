@@ -65,7 +65,7 @@ is($list->item->count->get, 1, 'now have an item');
 			type => '::Item',
 			key => 'int',
 		}
-	};
+	}, defer_methods => 0;
 }
 can_ok('Local::Model::MapCollection', qw(new item));
 my $map = new_ok('Local::Model::MapCollection' => [
