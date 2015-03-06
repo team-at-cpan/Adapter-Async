@@ -38,6 +38,7 @@ sub exists {
 sub set_key {
 	my ($self, $k, $v) = @_;
 	$self->{data}{$k} = $v;
+	$self->bus->invoke_event(set_key => $k, $v);
 	Future->done($k)
 }
 
@@ -96,7 +97,8 @@ sub modify {
 
 sub delete {
 	my ($self, $k) = @_;
-	delete $self->{data}{$k};
+	my $v = delete $self->{data}{$k};
+	$self->bus->invoke_event(delete => $k, $v);
 	Future->wrap($k);
 }
 
