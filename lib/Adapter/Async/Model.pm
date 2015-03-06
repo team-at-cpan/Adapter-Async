@@ -3,6 +3,30 @@ package Adapter::Async::Model;
 use strict;
 use warnings;
 
+=head1 NAME
+
+Adapter::Async::Model - helper class for defining models
+
+=head1 DESCRIPTION
+
+Generates accessors and helpers for code which interacts with L<Adapter::Async>-related 
+classes. Please read the warnings in L<Adapter::Async> before continuing.
+
+All definitions are applied via the L</import> method:
+
+ package Some::Class;
+ use Adapter::Async::Model {
+  some_thing => 'string',
+  some_array => {
+   collection => 'OrderedList',
+   type => '::Thing',
+  }
+ };
+
+Note that methods are applied via a UNITCHECK block by default.
+
+=cut
+
 use Log::Any qw($log);
 
 use Future;
@@ -138,4 +162,15 @@ sub import {
 }
 
 1;
+
+__END__
+
+=head1 AUTHOR
+
+Tom Molesworth <cpan@perlsite.co.uk>
+
+=head1 LICENSE
+
+Copyright Tom Molesworth 2013-2015. Licensed under the same terms as Perl itself.
+
 
