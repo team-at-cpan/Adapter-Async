@@ -30,6 +30,7 @@ sub clear {
 
 sub splice:method {
 	my ($self, $idx, $len, $data) = @_;
+	$idx ||= 0;
 	$data ||= [];
 	my @rslt = splice @{$self->{data}}, $idx, $len, @$data;
 	$self->bus->invoke_event(splice => $idx, $len, $data => \@rslt);
