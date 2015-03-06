@@ -47,6 +47,35 @@ sub get_key {
 	Future->done($self->{data}{$k})
 }
 
+sub each : method {
+	my ($self, $code) = @_;
+	for my $k (keys %{ $self->{data} }) {
+		$code->($k, $self->{data}{$k})
+	}
+	Future->done;
+}
+
+sub keys : method {
+	my ($self) = @_;
+	Future->done([
+		keys %{ $self->{data} }
+	])
+}
+
+sub values : method {
+	my ($self) = @_;
+	Future->done([
+		values %{ $self->{data} }
+	])
+}
+
+sub all {
+	my ($self) = @_;
+	Future->done(+{
+		%{ $self->{data} }
+	})
+}
+
 # XXX weakrefs
 sub move {
 	my ($self, $idx, $len, $offset) = @_;
