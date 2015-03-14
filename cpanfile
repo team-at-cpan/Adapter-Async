@@ -6,6 +6,7 @@ requires 'Variable::Disposition', '>= 0.004';
 
 requires 'Log::Any', 0;
 
+recommends 'List::BinarySearch', '>= 0.25';
 recommends 'Check::UnitCheck', '>= 0.13';
 
 on 'test' => sub {

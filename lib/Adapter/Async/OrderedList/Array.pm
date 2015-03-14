@@ -145,6 +145,22 @@ sub range {
 	Future->done
 }
 
+sub find_idx {
+	my ($self, $item, $code) = @_;
+	require List::BinarySearch;
+	$code ||= sub { ($a // '') cmp ($b // '') };
+	my $idx = List::BinarySearch::binsearch($code, $item, $self->{data});
+	return defined($idx) ? Future->done($idx) : Future->fail('not found');
+}
+
+sub find_insert_pos {
+	my ($self, $item, $code) = @_;
+	require List::BinarySearch;
+	$code ||= sub { ($a // '') cmp ($b // '') };
+	my $idx = List::BinarySearch::binsearch_pos($code, $item, $self->{data});
+	return defined($idx) ? Future->done($idx) : Future->fail('not found');
+}
+
 1;
 
 __END__

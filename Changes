@@ -1,7 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
-	No new features.
+	Features:
+	* ->find_idx and ->find_insert_pos on arrays
 
 	Bugs fixed:
 	* ->push on an ::OrderedList now adds to the end, rather than the start

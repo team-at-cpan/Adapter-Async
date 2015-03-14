@@ -4,6 +4,8 @@ use warnings;
 use Test::More;
 use Test::Fatal;
 
+use Future::Utils qw(fmap0);
+
 use Adapter::Async::OrderedList::Array;
 
 my $array = new_ok('Adapter::Async::OrderedList::Array');
@@ -142,6 +144,52 @@ is($array->count->get, 0, 'count now zero');
 	is_deeply($array->get(
 		items => [0..3],
 	)->get, [qw(a b c d)], 'elements were in the right order');
+}
+{ # find_idx
+	is(exception { $array->clear->get }, undef, 'clear array');
+	my @items = (qw(a b c d));
+	like(exception {
+		note "* had $_" for Future->needs_all(
+			map $array->find_idx($_), @items
+		)->get;
+	}, qr/not found/, 'no entries found yet');
+	is(exception {
+		$array->push([$_])->get for @items;
+	}, undef, 'can push');
+	is($array->count->get, 0 + @items, 'count now ' . @items);
+	is(exception {
+		my $idx = 0;
+		is($array->find_idx($_)->get, $idx++, "found at the right index") for @items;
+	}, undef, 'find_idx is happy now');
+	is_deeply($array->get(
+		items => [0..3],
+	)->get, [qw(a b c d)], 'elements were in the right order');
+}
+{ # find_idx
+	is(exception { $array->clear->get }, undef, 'clear array');
+	my @items = (qw(a b c d));
+	is(exception {
+		(fmap0 {
+			my $item = shift;
+			$array->find_insert_pos($item)->then(sub {
+				my ($idx) = @_;
+				ok(defined($idx), 'have some sort of value');
+				$array->insert($idx, [ $item ])
+			})
+		} foreach => [ @items ])->get;
+	}, undef, 'can populate via ->find_insert_pos');
+	is($array->count->get, 0 + @items, 'count now ' . @items);
+	is_deeply($array->get(
+		items => [0..3],
+	)->get, [qw(a b c d)], 'elements were in the right order');
+	is(exception {
+		my $idx = 0;
+		is($array->find_idx($_)->get, $idx++, "found at the right index") for @items;
+	}, undef, 'find_idx is happy now');
+	is(exception {
+		my $idx = 0;
+		is($array->find_insert_pos($_)->get, $idx++, "found at the right index") for @items;
+	}, undef, 'find_insert_pos is also happy');
 }
 
 done_testing;
