@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.018     2016-11-06 22:41:55+08:00 Asia/Kuala_Lumpur
 	New dependencies:
 	* List::BinarySearch is now required, rather than optional
 
