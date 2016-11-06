@@ -3,7 +3,7 @@ package Adapter::Async;
 use strict;
 use warnings;
 
-our $VERSION = '0.017';
+our $VERSION = '0.018';
 
 =head1 NAME
 

@@ -1,6 +1,9 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+	New dependencies:
+	* List::BinarySearch is now required, rather than optional
+
 	Features:
 	* ->find_idx and ->find_insert_pos on arrays
 
