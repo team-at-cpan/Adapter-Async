@@ -161,6 +161,17 @@ sub find_insert_pos {
 	return defined($idx) ? Future->done($idx) : Future->fail('not found');
 }
 
+sub extract_first_by {
+	my ($self, $code, $start_idx) = @_;
+	$start_idx //= 0;
+	for my $idx ($start_idx..$#{$self->{data}}) {
+		if(grep $code->($_), $self->{data}{$idx}) {
+			return Future->done(splice @{$self->{data}}, $idx, 1);
+		}
+	}
+	return Future->done;
+}
+
 1;
 
 __END__
