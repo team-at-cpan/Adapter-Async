@@ -165,8 +165,8 @@ sub extract_first_by {
 	my ($self, $code, $start_idx) = @_;
 	$start_idx //= 0;
 	for my $idx ($start_idx..$#{$self->{data}}) {
-		if(grep $code->($_), $self->{data}{$idx}) {
-			return Future->done(splice @{$self->{data}}, $idx, 1);
+		if(grep $code->($_), $self->{data}[$idx]) {
+			return Future->done(CORE::splice @{$self->{data}}, $idx, 1);
 		}
 	}
 	return Future->done;
