@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.019     2017-03-26 15:50:00+08:00 Asia/Kuala_Lumpur
 	New features:
 	* Added extract_first_by to ::Array
 
